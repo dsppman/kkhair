@@ -41,14 +41,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.data._db_show = wx.cloud.database().collection('show')
+    wx.startPullDownRefresh()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    wx.startPullDownRefresh()
+    
   },
 
   /**
@@ -76,14 +77,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    setTimeout(() => {
-      this.data._loaded = false
-      this.data._page = 1
+    this.data._loaded = false
+    this.data._page = 1
+    this._GetListData(res => {
       this.setData({
-        list: this._GetListData(),
+        list: res.data,
+      }, function () {
+        wx.stopPullDownRefresh()
       })
-      wx.stopPullDownRefresh()
-    }, 1000)
+    })
   },
 
   /**
@@ -93,23 +95,24 @@ Page({
     if (!this.data._loaded) {
       this.setData({
         loading: true,
-      })
-      setTimeout(() => {
+      },function () {
         this.data._page++
-        const data = this._GetListData()
-        if (data.length > 0) {
-          this.setData({
-            list: this.data.list.concat(data),
-            loading: false,
-          })
-        } else {
-          this.setData({
-            loading: false,
-          },function() {
-            this.data._loaded = true
-          })
-        }
-      }, 1000)
+        this._GetListData(res => {
+          const data = res.data
+          if (data.length > 0) {
+            this.setData({
+              list: this.data.list.concat(data),
+              loading: false,
+            })
+          } else {
+            this.setData({
+              loading: false,
+            },function() {
+              this.data._loaded = true
+            })
+          }
+        })
+      })
     }
   },
 
@@ -123,12 +126,12 @@ Page({
       return {
         title: this.data.list[index].title,
         path: '/pages/show/show?id=' + this.data.list[index].id,
-        imageUrl: this.data.list[index].thumb // 图片 URL
+        imageUrl: this.data.list[index].photos_url[0] // 图片 URL
       }
     } else {
       return {
-        title: 'kk家发色小铺',
-        imageUrl: 'http://p5.so.qhimgs1.com/t0269418fde681cc850.jpg' // 图片 URL
+        // title: 'kk家发色小铺',
+        imageUrl: 'cloud://test-406uy.7465-test-406uy-1302245476/test/100906679_3048690501861106_6656062981659597756_n.jpg' // 图片 URL
       }
     }
   },
@@ -148,25 +151,21 @@ Page({
       url: '/pages/show/show?id=' + id,
     })
   },
-  _GetListData() {
-    if (this.data._page > 5) {
-      return []
-    } else {
-      return [{
-        id: 12580,
-        title: "免漂五彩斑斓黑发色",
-        desc: "红蓝棕",
-        thumb: "https://wx1.sbimg.cn/2020/05/25/100913647_242491737039992_6051746423206843691_n.jpg"
-      },
-      {
-        id: 12581,
-        title: "免漂五彩斑斓黄发色",
-        thumb: "http://p0.so.qhimgs1.com/t02d92ca722a82caac8.jpg"
-      },{
-        id: 12582,
-        title: "免漂五彩斑斓紫发色",
-        thumb: "http://p5.so.qhimgs1.com/t0269418fde681cc850.jpg"
-      },]
-    }
+  _GetListData(obj) {
+    const max_limit = 6
+    const page = this.data._page - 1
+    this.data._db_show.orderBy('datetime', 'desc').
+    skip(page * max_limit).limit(max_limit).
+    field({
+      _id: true,
+      tags: true,
+      title: true,
+      content: true,
+      photos_url: true
+    }).get({
+      success: function(res) {
+        obj(res)
+      }
+    })
   }
 })

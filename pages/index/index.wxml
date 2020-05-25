@@ -14,15 +14,15 @@
 <view class="container">
   <view class="item" wx:for="{{list}}" wx:key="index">
     <view class="head">
-      <view class="title" bindtap="toShowPage" data-id="{{item.id}}">
+      <view class="title" bindtap="toShowPage" data-id="{{item._id}}">
         <iconfont type="dianzan" /> {{item.title}}
       </view>
       <!-- <view class="share"><iconfont type="share" /> 分享</view> -->
       <button class="share" open-type="share" data-index="{{index}}"><iconfont type="share" /> 分享</button>
     </view>
-    <view class="content" bindtap="toShowPage" data-id="{{item.id}}">
-      <view class="intro"  wx:if="{{item.desc}}">{{item.desc}}</view>
-      <image class="thumb" src="{{item.thumb}}" mode="aspectFill" />
+    <view class="content" bindtap="toShowPage" data-id="{{item._id}}">
+      <view class="intro"  wx:if="{{item.content}}">{{item.content}}</view>
+      <image class="thumb" src="{{item.photos_url[0]}}" mode="aspectFill" />
     </view>
   </view>
 </view>

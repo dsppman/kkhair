@@ -13,15 +13,9 @@ Page({
    */
   onLoad: function (options) {
     const id = options.id
-    console.log(id)
-    this.setData({
-      title: '五彩斑斓黑色',
-      content: '我是描述',
-      pic: [
-        'https://s1.ax1x.com/2020/05/25/tCdrIP.jpg',
-        'https://s1.ax1x.com/2020/05/25/tCdyPf.jpg',
-        'https://s1.ax1x.com/2020/05/25/tCd6G8.jpg'
-      ]
+    const db_show = wx.cloud.database().collection('show')
+    db_show.doc(id).get().then(res => {
+      this.setData(res.data)
     })
   },
 
@@ -73,14 +67,14 @@ Page({
   onShareAppMessage: function () {
     return {
       title: this.data.title,
-      imageUrl: this.data.pic[0]
+      imageUrl: this.data.photos_url[0]
     }
   },
 
   ShowQRCode: function () {
     wx.previewImage({
       urls: [
-        'https://s1.ax1x.com/2020/05/25/tCNnvd.jpg'
+        'cloud://test-406uy.7465-test-406uy-1302245476/test/微信图片_20200525145436.jpg'
       ],
     })
   }
