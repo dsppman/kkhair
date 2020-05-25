@@ -1,0 +1,4 @@
+/**app.wxss**/
+button::after {
+  border: none;
+}

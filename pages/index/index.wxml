@@ -1,0 +1,31 @@
+<!--pages/index/index.wxml-->
+<scroll-view scroll-x class="tabbar">
+  <view class="row">
+    <view 
+    class="item {{active === index ? 'active' : ''}}" 
+    bindtap="switchTab" 
+    wx:for="{{navBarList}}" 
+    wx:key="index" 
+    data-index="{{index}}">
+      {{item.title}}
+    </view>
+  </view>
+</scroll-view>
+<view class="container">
+  <view class="item" wx:for="{{list}}" wx:key="index">
+    <view class="head">
+      <view class="title" bindtap="toShowPage" data-id="{{item.id}}">
+        <iconfont type="dianzan" /> {{item.title}}
+      </view>
+      <!-- <view class="share"><iconfont type="share" /> 分享</view> -->
+      <button class="share" open-type="share" data-index="{{index}}"><iconfont type="share" /> 分享</button>
+    </view>
+    <view class="content" bindtap="toShowPage" data-id="{{item.id}}">
+      <view class="intro"  wx:if="{{item.desc}}">{{item.desc}}</view>
+      <image class="thumb" src="{{item.thumb}}" mode="aspectFill" />
+    </view>
+  </view>
+</view>
+<view class="loadmore" wx:if="{{loading}}">
+  <view class="loading"></view>
+</view>

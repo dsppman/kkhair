@@ -1,0 +1,15 @@
+<!--pages/show/show.wxml-->
+<view class="container">
+  <view class="title">{{title}}</view>
+  <view class="content"><text selectable>{{content}}</text></view>
+  <view class="pic-list">
+    <image wx:for="{{pic}}" wx:key="index" src="{{item}}" mode="widthFix" class="pic" />
+  </view>
+</view>
+<view class="footer">
+  <view class="bar">
+    <view class="more btn" bindtap="ShowQRCode">了解更多</view>
+    <button open-type="share" class="share btn"><iconfont type="share" /> 分享给好友</button>
+  </view>
+  <view class="pd"></view>
+</view>

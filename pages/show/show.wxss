@@ -1,0 +1,65 @@
+/* pages/show/show.wxss */
+.container {
+  padding: 5px 10px 80px;
+}
+
+.container .title {
+  width: 100%;
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.container .content {
+  padding: 10px 0;
+  width: 100%;
+}
+
+.container .pic-list {
+  display: grid;
+  gap: 5px;
+}
+
+.container .pic-list .pic {
+  width: 100%;
+}
+
+.footer {
+  box-shadow: 0 -5px 15px -15px #969696b6;
+  background-color: white;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.footer .pd {
+  height: 15px;
+}
+
+.footer .bar {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px 15px;
+}
+
+.footer .bar .btn {
+  border-radius: 30px;
+  height: 45px;
+  width: 160px;
+  line-height: 45px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  box-shadow: 0 0 15px -10px #969696b6;
+}
+
+.footer .bar .more {
+  border:1px solid #e54d42;
+  color: #e54d42;
+}
+
+.footer .bar .share {
+  background-color: rgb(254, 222, 0);
+  padding: 0;
+}

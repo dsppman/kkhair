@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/show/show"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#fff",
+    "navigationBarTitleText": "kk家发色小铺",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "iconfont": "components/iconfont/iconfont"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
