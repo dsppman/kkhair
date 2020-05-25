@@ -41,7 +41,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.data._db_show = wx.cloud.database().collection('show')
+    const db = wx.cloud.database()
+    this.data._db_show = db.collection('show')
+    db.collection('base').doc('989f4e215ecc002d003c17c931055e0d').get().then(res => {
+      this.data._share_photo_url = res.data.share_photo_url
+      this.data._share_title = res.data.share_title
+    })
     wx.startPullDownRefresh()
   },
 
@@ -130,8 +135,8 @@ Page({
       }
     } else {
       return {
-        // title: 'kk家发色小铺',
-        imageUrl: 'cloud://test-406uy.7465-test-406uy-1302245476/test/100906679_3048690501861106_6656062981659597756_n.jpg' // 图片 URL
+        title: this.data._share_title,
+        imageUrl: this.data._share_photo_url // 图片 URL
       }
     }
   },
