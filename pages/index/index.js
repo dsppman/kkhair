@@ -181,6 +181,8 @@ Page({
       title: true,
       content: true,
       photos_url: true
-    }).get().then(obj)
+    }).get({
+      success: obj
+    })
   }
 })

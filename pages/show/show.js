@@ -13,9 +13,21 @@ Page({
    */
   onLoad: function (options) {
     const id = options.id
-    const db_show = wx.cloud.database().collection('show')
-    db_show.doc(id).get().then(res => {
-      this.setData(res.data)
+    const db = wx.cloud.database()
+    const _ = db.command
+    const db_show = db.collection('show').doc(id)
+    db_show.get({
+      success:res => {
+        console.log(res.data)
+        this.setData(res.data)
+        db.collection('view_logs').add({
+          data: {
+            show_id: this.data._id,
+            show_title: this.data.title,
+            datetime: new Date()
+          }
+        })
+      }
     })
   },
 
