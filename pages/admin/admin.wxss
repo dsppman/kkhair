@@ -13,7 +13,6 @@ page {
 .inputbar .title {
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(114, 130, 138,0.2);
-  text-align: center;
   display: flex;
 }
 

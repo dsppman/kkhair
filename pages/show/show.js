@@ -14,7 +14,6 @@ Page({
   onLoad: function (options) {
     const id = options.id
     const db = wx.cloud.database()
-    const _ = db.command
     const db_show = db.collection('show').doc(id)
     db_show.get({
       success:res => {
@@ -78,6 +77,14 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    wx.cloud.database().collection('share_logs').add({
+      data: {
+        page: 'show',
+        show_id: this.data._id,
+        show_title: this.data.title,
+        datetime: new Date()
+      }
+    })
     return {
       title: this.data.title,
       imageUrl: this.data.photos_url[0]

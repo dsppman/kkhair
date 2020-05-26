@@ -35,17 +35,24 @@ Page({
     ],
     list: [],
     loading: false,
+    admin: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const db = wx.cloud.database()
-    this.data._db_show = db.collection('show')
-    db.collection('base').doc('989f4e215ecc002d003c17c931055e0d').get().then(res => {
-      this.data._share_photo_url = res.data.share_photo_url
-      this.data._share_title = res.data.share_title
+    this.data._db = wx.cloud.database()
+    this.data._db.collection('admin').get({
+      success: res => {
+        console.log(res.data)
+      }
+    })
+    this.data._db.collection('base').doc('989f4e215ecc002d003c17c931055e0d').get({
+      success: res => {
+        this.data._share_photo_url = res.data.share_photo_url
+        this.data._share_title = res.data.share_title
+      }
     })
     wx.startPullDownRefresh()
   },
@@ -128,12 +135,26 @@ Page({
     if (res.from === 'button') {
       // 来自页面内转发按钮
       const index = res.target.dataset.index
+      this.data._db.collection('share_logs').add({
+        data: {
+          page: 'index',
+          show_id: this.data.list[index]._id,
+          show_title: this.data.list[index].title,
+          datetime: new Date()
+        }
+      })
       return {
         title: this.data.list[index].title,
         path: '/pages/show/show?id=' + this.data.list[index]._id,
         imageUrl: this.data.list[index].photos_url[0] // 图片 URL
       }
     } else {
+      this.data._db.collection('share_logs').add({
+        data: {
+          page: 'index',
+          datetime: new Date()
+        }
+      })
       return {
         title: this.data._share_title,
         imageUrl: this.data._share_photo_url // 图片 URL
@@ -160,11 +181,44 @@ Page({
   },
 
   backTop: function () {
-    console.log('scroll')
     wx.pageScrollTo({
       scrollTop: 0,
       duration: 300
     })
+  },
+
+  addShow: function () {
+    if (this.data.admin) {
+      wx.navigateTo({
+        url: '/pages/admin/admin',
+      })
+    }
+  },
+
+  delShow: function (res) {
+    const index = res.currentTarget.dataset.index
+    if (this.data.admin) {
+      wx.showModal({
+        title: '删除推文',
+        content: '是否删除' + this.data.list[index].title.substr(0,20),
+        confirmText: '删除',
+        success:res => {
+          if (res.confirm) {
+            this.data._db.collection('show').doc(this.data.list[index]._id).remove({
+              success: res => {
+                wx.cloud.deleteFile({
+                  fileList: this.data.list[index].photos_url
+                })
+                this.data.list.splice(index, 1)
+                this.setData({
+                  list:this.data.list
+                })
+              }
+            })
+          }
+        }
+      })
+    }
   },
 
   /**
@@ -173,7 +227,7 @@ Page({
   _GetListData(obj) {
     const max_limit = 6
     const page = this.data._page - 1
-    this.data._db_show.orderBy('datetime', 'desc').
+    this.data._db.collection('show').orderBy('datetime', 'desc').
     skip(page * max_limit).limit(max_limit).
     field({
       _id: true,
