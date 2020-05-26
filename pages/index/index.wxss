@@ -54,6 +54,22 @@ page {
   } 
 }
 
+.back-top {
+  position: fixed;
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  box-shadow: 3px 3px 12px -7px rgba(128, 128, 128, 0.8);
+  border-radius: 50%;
+  bottom: calc(70px + constant(safe-area-inset-bottom));
+  bottom: calc(70px + env(safe-area-inset-bottom));
+  right: 17px;
+  text-align: center;
+  padding-top: 5px;
+  box-sizing: border-box;
+  color: #333333;
+}
+
 .container {
   padding: 10px;
   display: grid;
@@ -107,4 +123,3 @@ page {
   width: auto;
   height: 33vw;
 }
-

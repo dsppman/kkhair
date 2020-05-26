@@ -140,6 +140,7 @@ Page({
       }
     }
   },
+
   switchTab: function (res) {
     const index = res.currentTarget.dataset.index
     if (index != this.data.active) {
@@ -150,12 +151,25 @@ Page({
       })
     }
   },
+
   toShowPage: function (res) {
     const id = res.currentTarget.dataset.id
     wx.navigateTo({
       url: '/pages/show/show?id=' + id,
     })
   },
+
+  backTop: function () {
+    console.log('scroll')
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 300
+    })
+  },
+
+  /**
+   * 私有方法
+   */
   _GetListData(obj) {
     const max_limit = 6
     const page = this.data._page - 1

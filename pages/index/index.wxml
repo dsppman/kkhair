@@ -42,3 +42,4 @@
 <view class="loadmore" wx:if="{{loading}}">
   <view class="loading"></view>
 </view>
+<view class="back-top none" bindtap="backTop"><iconfont type="up" size="25px" /></view>
