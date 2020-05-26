@@ -18,8 +18,9 @@ Page({
     const db_show = db.collection('show').doc(id)
     db_show.get({
       success:res => {
-        console.log(res.data)
         this.setData(res.data)
+      },
+      complete:res => {
         db.collection('view_logs').add({
           data: {
             show_id: this.data._id,

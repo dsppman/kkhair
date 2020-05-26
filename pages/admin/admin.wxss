@@ -1,1 +1,57 @@
 /* pages/admin/admin.wxss */
+page {
+  background-color: #f6f7f9;
+}
+.container {
+  padding: 20px;
+  margin: 10px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 0 10px -5px rgba(114, 130, 138,0.5);
+}
+
+.inputbar .title {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(114, 130, 138,0.2);
+  text-align: center;
+  display: flex;
+}
+
+.inputbar .title .input {
+  flex: 1;
+  padding: 0 5px;
+}
+
+.inputbar .title .count {
+  color:#b3b3b3;
+}
+
+.inputbar .content {
+  padding: 10px 0;
+}
+
+.inputbar .content .input {
+  width: 100%;
+}
+
+.photos {
+  display: grid;
+  margin: 15px 0;
+  gap: 3px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.photos .group {
+  width: auto;
+  height: 30vw;
+}
+
+.photos .add {
+  width: auto;
+  height: 30vw;
+  background-color: #b3b3b3b0;
+  line-height: 30vw;
+  text-align: center;
+  font-size: 15vw;
+  color: #b3b3b3;
+}
