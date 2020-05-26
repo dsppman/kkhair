@@ -130,7 +130,7 @@ Page({
       const index = res.target.dataset.index
       return {
         title: this.data.list[index].title,
-        path: '/pages/show/show?id=' + this.data.list[index].id,
+        path: '/pages/show/show?id=' + this.data.list[index]._id,
         imageUrl: this.data.list[index].photos_url[0] // 图片 URL
       }
     } else {
@@ -167,10 +167,6 @@ Page({
       title: true,
       content: true,
       photos_url: true
-    }).get({
-      success: function(res) {
-        obj(res)
-      }
-    })
+    }).get().then(obj)
   }
 })

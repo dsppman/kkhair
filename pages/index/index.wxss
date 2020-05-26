@@ -89,9 +89,22 @@ page {
   border-radius: 0 0 10px 10px;
 }
 
-.container .item .content .thumb {
+.container .item .content .thumbs {
+  display: grid;
   margin-top: 7px;
-  border-radius: 5px;
-  width: 100%;
-  max-height: 100vw;
+  gap: 3px;
+  grid-template-columns: repeat(3, 1fr);
 }
+
+.container .item .content .normal {
+  border-radius: 5px;
+  width: 55vw;
+  height: 55vw;
+}
+
+.container .item .content .group {
+  border-radius: 5px;
+  width: auto;
+  height: 33vw;
+}
+

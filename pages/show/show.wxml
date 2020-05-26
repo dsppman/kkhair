@@ -3,7 +3,7 @@
   <view class="title">{{title}}</view>
   <view class="content"><text selectable>{{content}}</text></view>
   <view class="pic-list">
-    <image wx:for="{{photos_url}}" wx:key="index" src="{{item}}" mode="widthFix" class="pic" />
+    <image lazy-load wx:for="{{photos_url}}" wx:key="index" src="{{item}}" mode="widthFix" class="pic" />
   </view>
 </view>
 <view class="footer">
