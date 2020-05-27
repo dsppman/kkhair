@@ -19,6 +19,11 @@ Page({
       success:res => {
         this.setData(res.data)
       },
+      fail:res => {
+        this.setData({
+          title: '页面不存在，可能已被删除'
+        })
+      },
       complete:res => {
         db.collection('view_logs').add({
           data: {

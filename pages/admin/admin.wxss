@@ -3,7 +3,7 @@ page {
   background-color: #f6f7f9;
 }
 .container {
-  padding: 20px;
+  padding: 15px;
   margin: 10px;
   border-radius: 15px;
   background-color: white;
@@ -34,23 +34,34 @@ page {
 }
 
 .photos {
+  padding: 15px 0;
+}
+
+.photos .input {
   display: grid;
-  margin: 15px 0;
   gap: 3px;
   grid-template-columns: repeat(3, 1fr);
 }
 
-.photos .group {
+.photos .input .group {
   width: auto;
   height: 30vw;
 }
 
-.photos .add {
+.photos .input .add {
   width: auto;
   height: 30vw;
-  background-color: #b3b3b3b0;
+  background-color: rgb(248, 248, 248);
   line-height: 30vw;
   text-align: center;
   font-size: 15vw;
+  color: rgb(195, 195, 195);
+}
+
+.photos .count {
+  padding: 10px 0;
+  width: 100%;
+  text-align: end;
+  font-size: small;
   color: #b3b3b3;
 }

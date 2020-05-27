@@ -1,0 +1,25 @@
+<!--pages/admin/setting.wxml-->
+<view class="container">
+  <view class="item">
+    <view class="label">微信二维码：</view>
+    <image class="img" wx:if="{{qrcode_url}}" src="{{qrcode_url}}" mode="aspectFill" bindlongpress="changeQrcode" />
+    <view wx:else class="add"><iconfont type="plus" /></view>
+  </view>
+  <view class="tips" wx:if="{{qrcode_url}}">图片长按可更换</view>
+  <view class="line" />
+  <view class="item">
+    <view class="label">分享名片标题：</view>
+    <input placeholder="请输入标题" maxlength="15" placeholder-style="color:#b3b3b3;font-size:15px;"  value="{{share_title}}" bindinput="changeTitle" />
+  </view>
+  <view class="tips">不填写默认为小程序名字 {{share_title.length}}/15</view>
+  <view class="item">
+    <view class="label">分享名片图：</view>
+    <image class="img" wx:if="{{share_photo_url}}" src="{{share_photo_url}}" bindlongpress="changeShareImg" mode="aspectFill" />
+    <view wx:else class="add"><iconfont type="plus" /></view>
+  </view>
+  <view class="tips" wx:if="{{share_photo_url}}">图片长按可更换</view>
+  <view class="line" />
+  <view class="send">
+    <button type="primary" loading="{{loading}}" disabled="{{loading}}" bindtap="onSubmit">{{loading ? '正在设置' : '设置'}}</button>
+  </view>
+</view>

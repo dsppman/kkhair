@@ -54,15 +54,13 @@ page {
   } 
 }
 
-.back-top {
+.top-btn {
   position: fixed;
   height: 40px;
   width: 40px;
   background-color: white;
   box-shadow: 3px 3px 12px -7px rgba(128, 128, 128, 0.8);
   border-radius: 50%;
-  bottom: calc(70px + constant(safe-area-inset-bottom));
-  bottom: calc(70px + env(safe-area-inset-bottom));
   right: 17px;
   text-align: center;
   padding-top: 5px;
@@ -70,21 +68,22 @@ page {
   color: #333333;
 }
 
+.back-top {
+  bottom: calc(70px + constant(safe-area-inset-bottom));
+  bottom: calc(70px + env(safe-area-inset-bottom));
+}
+
 .add-show {
-  position: fixed;
-  height: 40px;
-  width: 40px;
-  background-color: white;
-  box-shadow: 3px 3px 12px -7px rgba(128, 128, 128, 0.8);
-  border-radius: 50%;
   bottom: calc(120px + constant(safe-area-inset-bottom));
   bottom: calc(120px + env(safe-area-inset-bottom));
-  right: 17px;
-  text-align: center;
-  padding-top: 5px;
-  box-sizing: border-box;
-  color: #333333;
 }
+
+.setting {
+  bottom: calc(170px + constant(safe-area-inset-bottom));
+  bottom: calc(170px + env(safe-area-inset-bottom));
+}
+
+
 
 .container {
   padding: 10px;
@@ -104,6 +103,10 @@ page {
 
 .container .item .head .title {
   flex: 1;
+}
+
+.container .item .head .title .hot {
+  color: red;
 }
 
 .container .item .head .share {

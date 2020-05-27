@@ -8,7 +8,6 @@ Page({
     title: '',
     content: '',
     temp_url: [],
-    title_count: 0,
     loading: false
   },
 
@@ -16,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this.onChooseImg()
+    this.onChooseImg()
   },
 
   /**
@@ -61,17 +60,9 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
-  changeTitleLen:function (e) {
-    this.data.title = e.detail.value
+  changeTitle:function (e) {
     this.setData({
-      title_count: e.detail.value.length
+      title: e.detail.value
     })
   },
 
@@ -93,12 +84,27 @@ Page({
     })
   },
 
+  delImg: function (res) {
+    const index = res.currentTarget.dataset.index
+    wx.showModal({
+      title: '删除图片',
+      content: '是否删除第' + (index + 1) + '张图片',
+      confirmText: '删除',
+      success:res => {
+        if (res.confirm) {
+          this.data.temp_url.splice(index, 1)
+          this.setData({
+            temp_url:this.data.temp_url
+          })
+        }
+      }
+    })
+  },
+
   onSubmit: function () {
-    const close = () => {
+    const loaded = () => {
       this.setData({
         loading: false
-      },function() {
-        wx.hideLoading()
       })
     }
 
@@ -110,21 +116,21 @@ Page({
           title: '请正确填写标题',
           icon: 'none',
           duration: 2000,
-          complete: close
+          complete: loaded
         })
       } else if (this.data.content.length > 300) {
         wx.showToast({
           title: '请正确填写内容，不可超300字',
           icon: 'none',
           duration: 2000,
-          complete: close
+          complete: loaded
         })
       } else if (this.data.temp_url.length == 0) {
         wx.showToast({
           title: '请上传照片，最多可上传九张图',
           icon: 'none',
           duration: 2000,
-          complete: close
+          complete: loaded
         })
       } else {
         const photos_url = []
@@ -143,7 +149,6 @@ Page({
               photos_url.push(res.fileID)
               index = index + 1
               if (index == this.data.temp_url.length) {
-                console.log(photos_url)
                 wx.cloud.database().collection('show').add({
                   data: {
                     title: this.data.title,
@@ -156,11 +161,17 @@ Page({
                       title: '',
                       content: '',
                       temp_url: []
-                    }, close)
+                    }, loaded)
                     wx.showToast({
                       title: '发布成功',
-                      icon: 'success',
-                      duration: 2000
+                      icon: 'success'
+                    })
+                  },
+                  fail: res => {
+                    wx.showToast({
+                      title: '发布失败',
+                      icon: 'none',
+                      complete: loaded
                     })
                   }
                 })
@@ -170,7 +181,6 @@ Page({
             }
           })
         }
-
         uploader(0)
       }
     })

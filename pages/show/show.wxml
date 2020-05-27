@@ -8,7 +8,7 @@
 </view>
 <view class="footer">
   <view class="bar">
-    <view class="more btn" bindtap="ShowQRCode">了解更多</view>
+    <view class="more btn" bindtap="ShowQRCode"><iconfont type="wechat" size="17px" /> 了解更多</view>
     <button open-type="share" class="share btn"><iconfont type="share" /> 分享给好友</button>
   </view>
   <view class="pd"></view>

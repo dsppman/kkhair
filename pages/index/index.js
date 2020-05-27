@@ -7,35 +7,11 @@ Page({
    */
   data: {
     active: 0,
-    navBarList: [
-      {
-        title: "最新"
-      },
-      {
-        title: "推荐"
-      },
-      {
-        title: "高赞"
-      },
-      {
-        title: "红棕"
-      },
-      {
-        title: "蓝白"
-      },
-      {
-        title: "黑红"
-      },
-      {
-        title: "五彩"
-      },
-      {
-        title: "七彩"
-      }
+    category: [
+      "最新"
     ],
     list: [],
-    loading: false,
-    admin: true
+    loading: false
   },
 
   /**
@@ -43,15 +19,24 @@ Page({
    */
   onLoad: function (options) {
     this.data._db = wx.cloud.database()
-    this.data._db.collection('admin').get({
+    const db_base = this.data._db.collection('base').doc('base')
+    db_base.update({
+      data: {
+        admin_login: new Date()
+      },
       success: res => {
-        console.log(res.data)
+        this.setData({
+          admin: true
+        })
       }
     })
-    this.data._db.collection('base').doc('989f4e215ecc002d003c17c931055e0d').get({
+    db_base.get({
       success: res => {
         this.data._share_photo_url = res.data.share_photo_url
         this.data._share_title = res.data.share_title
+        this.setData({
+          category: this.data.category.concat(res.data.category)
+        })
       }
     })
     wx.startPullDownRefresh()
@@ -187,10 +172,18 @@ Page({
     })
   },
 
-  addShow: function () {
+  toAddShow: function () {
     if (this.data.admin) {
       wx.navigateTo({
         url: '/pages/admin/admin',
+      })
+    }
+  },
+
+  toSetting: function () {
+    if (this.data.admin) {
+      wx.navigateTo({
+        url: '/pages/admin/setting',
       })
     }
   },
@@ -212,6 +205,11 @@ Page({
                 this.data.list.splice(index, 1)
                 this.setData({
                   list:this.data.list
+                }, function(){
+                  wx.showToast({
+                    title: '删除成功',
+                    icon: 'success',
+                  })
                 })
               }
             })
@@ -227,16 +225,32 @@ Page({
   _GetListData(obj) {
     const max_limit = 6
     const page = this.data._page - 1
-    this.data._db.collection('show').orderBy('datetime', 'desc').
-    skip(page * max_limit).limit(max_limit).
-    field({
-      _id: true,
-      tags: true,
-      title: true,
-      content: true,
-      photos_url: true
-    }).get({
-      success: obj
-    })
+
+    const db_show = this.data._db.collection('show').orderBy('datetime', 'desc')
+    if (this.data.active > 0) {
+      db_show.skip(page * max_limit).limit(max_limit).
+      where({
+        tags: this.data.category[this.data.active]
+      }).field({
+        _id: true,
+        tags: true,
+        title: true,
+        content: true,
+        photos_url: true
+      }).get({
+        success: obj
+      })
+    } else {
+      db_show.skip(page * max_limit).limit(max_limit).
+      field({
+        _id: true,
+        tags: true,
+        title: true,
+        content: true,
+        photos_url: true
+      }).get({
+        success: obj
+      })
+    }
   }
 })

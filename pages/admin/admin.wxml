@@ -1,19 +1,21 @@
-<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
 <view class="container">
   <view class="inputbar">
     <view class="title">
-      <input class="input" auto-focus placeholder="请输入标题" maxlength="15" placeholder-style="color:#b3b3b3;font-size:15px;" bindinput="changeTitleLen" value="{{title}}" />
-      <view class="count">{{title_count}}/15</view>
+      <input class="input" auto-focus placeholder="请输入标题" maxlength="15" placeholder-style="color:#b3b3b3;font-size:15px;" bindinput="changeTitle" value="{{title}}" />
+      <view class="count">{{title.length}}/15</view>
     </view>
     <view class="content">
       <textarea class="input" placeholder="请输入内容 (可选)" maxlength="300" placeholder-style="color:#b3b3b3;font-size:15px;" bindinput="changeContent" value="{{content}}" />
     </view>
   </view>
   <view class="photos">
-    <image class="group" wx:if="{{temp_url.length > 0}}" wx:for="{{temp_url}}" src="{{item}}" wx:key="index" />
-    <view class="group add" wx:if="{{temp_url.length < 9}}" bindtap="onChooseImg"><iconfont type="add" /></view>
+    <view class="input">
+      <image class="group" bindlongpress="delImg" data-index="{{index}}" wx:if="{{temp_url.length > 0}}" wx:for="{{temp_url}}" src="{{item}}" wx:key="index" mode="aspectFill" />
+      <view class="add" wx:if="{{temp_url.length < 9}}" bindtap="onChooseImg"><iconfont type="plus" /></view>
+    </view>
+    <view class="count">长按图片可以进行删除 {{temp_url.length}}/9</view>
   </view>
   <view class="send">
-    <button type="primary" loading="{{loading}}" disabled="{{loading}}" bindtap="onSubmit">{{loading ? '正在发表' : '发表'}}</button>
+    <button type="primary" loading="{{loading}}" disabled="{{loading}}" bindtap="onSubmit">{{loading ? '正在发布' : '发布'}}</button>
   </view>
 </view>

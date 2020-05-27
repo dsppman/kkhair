@@ -9,10 +9,10 @@
     <view 
     class="item {{active === index ? 'active' : ''}}" 
     bindtap="switchTab" 
-    wx:for="{{navBarList}}" 
+    wx:for="{{category}}" 
     wx:key="index" 
     data-index="{{index}}">
-      {{item.title}}
+      {{item}}
     </view>
   </view>
 </scroll-view>
@@ -20,7 +20,7 @@
   <view class="item" wx:for="{{list}}" wx:key="index">
     <view class="head">
       <view class="title" bindtap="toShowPage" data-index="{{index}}" bindlongpress="delShow" data-id="{{item._id}}">
-        <iconfont type="dianzan" /> 
+        <iconfont type="hot" size="18px" class="hot" />
         {{item.title.length > 10 ? util.sub(item.title, 10) : item.title}}
       </view>
       <!-- <view class="share"><iconfont type="share" /> 分享</view> -->
@@ -42,5 +42,8 @@
 <view class="loadmore" wx:if="{{loading}}">
   <view class="loading"></view>
 </view>
-<view class="add-show" bindtap="addShow" wx:if="{{admin}}"><iconfont type="plus" size="25px" /></view>
-<view class="back-top" bindtap="backTop"><iconfont type="up" size="25px" /></view>
+<block wx:if="{{admin}}">
+  <view class="top-btn setting" bindtap="toSetting"><iconfont type="setting" size="25px" /></view>
+  <view class="top-btn add-show" bindtap="toAddShow"><iconfont type="plus" size="25px" /></view>
+</block>
+<view class="top-btn back-top" bindtap="backTop"><iconfont type="up" size="25px" /></view>
