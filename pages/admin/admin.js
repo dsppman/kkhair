@@ -8,6 +8,7 @@ Page({
     title: '',
     content: '',
     temp_url: [],
+    tags: [],
     loading: false
   },
 
@@ -15,6 +16,33 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.data._db = wx.cloud.database()
+    const db_base = this.data._db.collection('base').doc('base')
+    db_base.update({
+      data: {
+        admin_time: new Date()
+      },
+      success: res => {
+        db_base.get({
+          success:res => {
+            res.data.category.forEach(element => {
+              this.data.tags.push({
+                name: element,
+                checked: false
+              })
+            })
+            this.setData({
+              tags: this.data.tags
+            })
+          }
+        })
+      },
+      fail:res => {
+        wx.showToast({
+          title: '你不是管理员',
+        })
+      }
+    })
     this.onChooseImg()
   },
 
@@ -84,6 +112,13 @@ Page({
     })
   },
 
+  onChooseTag: function (e) {
+    const index = e.currentTarget.dataset.index
+    this.setData({
+      ['tags[' + index + '].checked']: !this.data.tags[index].checked
+    })
+  },
+
   delImg: function (res) {
     const index = res.currentTarget.dataset.index
     wx.showModal({
@@ -133,7 +168,7 @@ Page({
           complete: loaded
         })
       } else {
-        const photos_url = []
+        let photos_url = []
         const date = new Date()
         const time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
         const uploader = index => {
@@ -149,11 +184,18 @@ Page({
               photos_url.push(res.fileID)
               index = index + 1
               if (index == this.data.temp_url.length) {
-                wx.cloud.database().collection('show').add({
+                let tags = []
+                this.data.tags.forEach(element => {
+                  if (element.checked) {
+                    tags.push(element.name)
+                  }
+                });
+                this.data._db.collection('show').add({
                   data: {
                     title: this.data.title,
                     photos_url: photos_url,
                     content: this.data.content,
+                    tags: tags,
                     datetime: new Date()
                   },
                   success: res => {

@@ -48,3 +48,31 @@ page {
   font-size: 25vw;
   color: rgb(195, 195, 195);
 }
+
+.tag-add {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: rgb(248, 248, 248);
+  color: rgb(195, 195, 195);
+  line-height: 1.4rem;
+  text-align: center;
+  margin: 0 15px;
+}
+
+.tags {
+  padding: 10px 0;
+  display: flex;
+  white-space: nowrap;
+}
+
+.tags .tag {
+  margin: 0 5px;
+  padding: 5px 7px;
+  font-size: 14px;
+  border-radius: 5px;
+  background-color: rgb(248, 248, 248);
+}
+
+.send {
+  padding-top: 10px;
+}

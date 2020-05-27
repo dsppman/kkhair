@@ -7,7 +7,8 @@ Page({
   data: {
     qrcode_url: '',
     share_photo_url: '',
-    share_title: ''
+    share_title: '',
+    tag_name: ''
   },
 
   /**
@@ -103,12 +104,59 @@ Page({
   },
 
   /**
-   * 更换名片标题
+   * 改变名片标题
    */
   changeTitle: function (e) {
     this.setData({
       share_title: e.detail.value
     })
+  },
+
+  /**
+   * 添加标签名
+   */
+  changeTagName: function (e) {
+    this.data.tag_name = e.detail.value
+  },
+
+  /**
+   * 添加标签
+   */
+  addTag: function () {
+    if (this.data.tag_name.length > 0) {
+      this.data.category.unshift(this.data.tag_name)
+      this.setData({
+        tag_name: '',
+        category: this.data.category
+      })
+    } else {
+      wx.showToast({
+        title: '标签名不能为空',
+        icon: 'none'
+      })
+    }
+  },
+
+  /**
+   * 删除标签
+   */
+  delTag: function (e) {
+    console.log(e)
+    const index = e.currentTarget.dataset.index
+    wx.showModal({
+      title: '删除标签',
+      content: '是否删除 ' + this.data.category[index] + ' 标签',
+      confirmText: '删除',
+      success:res => {
+        if (res.confirm) {
+          this.data.category.splice(index, 1)
+          this.setData({
+            category: this.data.category
+          })
+        }
+      }
+    })
+
   },
 
   /**
@@ -121,15 +169,14 @@ Page({
       wx.showLoading({
         title: '正在设置...',
       })
-      const date = new Date()
-      const time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
 
       const update_data = () => {
         this.data._db_base.update({
           data: {
             qrcode_url: this.data.qrcode_url,
             share_photo_url: this.data.share_photo_url,
-            share_title: this.data.share_title
+            share_title: this.data.share_title,
+            category: this.data.category
           },
           success: res => {
             wx.showToast({

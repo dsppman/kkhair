@@ -22,7 +22,7 @@ Page({
     const db_base = this.data._db.collection('base').doc('base')
     db_base.update({
       data: {
-        admin_login: new Date()
+        admin_time: new Date()
       },
       success: res => {
         this.setData({

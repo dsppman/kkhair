@@ -7,6 +7,11 @@
     <view class="content">
       <textarea class="input" placeholder="请输入内容 (可选)" maxlength="300" placeholder-style="color:#b3b3b3;font-size:15px;" bindinput="changeContent" value="{{content}}" />
     </view>
+    <scroll-view scroll-x >
+      <view class="tags">
+        <view class="tag {{item.checked ? 'active' : ''}}" wx:for="{{tags}}" wx:key="index" data-index="{{index}}" bindtap="onChooseTag">{{item.name}}</view>
+      </view>
+    </scroll-view>
   </view>
   <view class="photos">
     <view class="input">

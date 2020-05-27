@@ -4,7 +4,7 @@
       return val.substring(0, num) + '...'
     }
 </wxs>
-<scroll-view scroll-x class="tabbar">
+<scroll-view scroll-x class="category">
   <view class="row">
     <view 
     class="item {{active === index ? 'active' : ''}}" 

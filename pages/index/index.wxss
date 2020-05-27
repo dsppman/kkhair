@@ -4,23 +4,23 @@ page {
   background-color: #f6f7f9;
 }
 
-.tabbar {
+.category {
   background-color: white;
   box-shadow: 0 4px 10px -10px rgba(114, 130, 138,0.6);
 }
 
-.tabbar .row {
+.category .row {
   display: flex;
   white-space: nowrap;
   font-size: small;
   padding: 10px 0;
 }
 
-.tabbar .row .item {
+.category .row .item {
   padding: 7px 15px;
 }
 
-.tabbar .row .active {
+.category .row .active {
   font-weight: bold;
   background-color: #f6f7f9;
   border-radius: 30px;
