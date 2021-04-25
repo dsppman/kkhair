@@ -7,8 +7,8 @@
 - pages/show 展示页
 ## 项目截图
 
-<img src="images/微信图片_20210425192553.png" width="50%"><img src="images/微信图片_20210425192613.png" width="50%">
-<img src="images/微信图片_20210425192607.png" width="50%"><img src="images/微信图片_20210425192601.png" width="50%">
+<img src="images/微信图片_20210425203004.jpg" width="50%"><img src="images/微信图片_20210425202833.jpg" width="50%">
+<img src="images/微信图片_20210425202836.jpg" width="50%"><img src="images/微信图片_20210425202829.jpg" width="50%">
 
 ## How to start
 
